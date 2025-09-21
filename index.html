@@ -155,11 +155,3 @@
 
     copyBtn.addEventListener('click', async ()=>{
       const text = out.textContent || '';
-      try{ await navigator.clipboard.writeText(text); copyBtn.textContent='Copied'; setTimeout(()=>copyBtn.textContent='Copy',1000);}
-      catch(e){ copyBtn.textContent='Error'; setTimeout(()=>copyBtn.textContent='Copy',1000); }
-    });
-
-    recalc();
-  </script>
-</body>
-</html>
