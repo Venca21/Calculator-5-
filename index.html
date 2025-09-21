@@ -1,28 +1,37 @@
 <!doctype html>
-<html lang="cs">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Kalkulačka − procentní odečet</title>
+  <title>Deduction Calculator</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Kalkulačka −5 %" />
+  <meta name="apple-mobile-web-app-title" content="Deduction Calc" />
   <style>
     :root{--bg:#0b0d10;--surface:#13161b;--border:#232832;--text:#e9edf3;--muted:#a6afbf;--accent:#6aa6ff;--accent2:#8cd4ff;--shadow:0 10px 30px rgba(0,0,0,.35)}
     @media (prefers-color-scheme: light){:root{--bg:#f6f7fb;--surface:#fff;--border:#e7ebf2;--text:#0f172a;--muted:#667085;--accent:#2f6bff;--accent2:#35b6ff;--shadow:0 12px 24px rgba(16,24,40,.08)}}
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,var(--bg),color-mix(in oklab,var(--bg) 85%,black));
-      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:var(--text);
-      display:flex;align-items:center;justify-content:center;padding:24px}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:linear-gradient(180deg,var(--bg),color-mix(in oklab,var(--bg) 85%,black));
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      color:var(--text);display:flex;align-items:center;justify-content:center;padding:24px
+    }
     .app{width:min(720px,100%);display:grid;gap:16px}
     .card{background:linear-gradient(180deg,var(--surface),color-mix(in oklab,var(--surface) 90%,black));
       border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
-    .title{display:flex;gap:8px;align-items:center;margin:0 0 6px 0;font-size:20px;font-weight:800}
-    .pill{font-size:12px;color:var(--muted);border:1px solid var(--border);padding:6px 10px;border-radius:999px}
-    .grid{display:grid;gap:12px} .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    h1.title{margin:0 0 8px 0;text-align:center;font-size:24px;font-weight:800;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:13px;text-align:center;margin:0 0 8px}
+    .grid{display:grid;gap:12px}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     label{font-size:13px;color:var(--muted)}
-    input[type="text"],input[type="number"]{width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:18px}
-    .chip{border:1px solid var(--border);background:transparent;color:var(--text);padding:8px 12px;border-radius:999px;cursor:pointer;font-size:14px}
+    input[type="text"],input[type="number"],select{
+      width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);
+      background:transparent;color:var(--text);font-size:18px;outline:none
+    }
+    select{font-size:16px}
+    .chip{border:1px solid var(--border);background:transparent;color:var(--text);
+      padding:8px 12px;border-radius:999px;cursor:pointer;font-size:14px}
     .chip[data-active="true"]{border-color:var(--accent);background:color-mix(in oklab,var(--accent) 18%,transparent)}
     .result{display:grid;gap:6px;padding:14px;border-radius:14px;border:1px dashed var(--border);
       background:linear-gradient(180deg,color-mix(in oklab,var(--surface) 86%,black),var(--surface))}
@@ -30,27 +39,36 @@
     .muted{color:var(--muted);font-size:13px}
     .actions{display:flex;gap:10px;flex-wrap:wrap}
     .btn{border:none;border-radius:12px;padding:12px 14px;cursor:pointer;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;font-weight:700}
-    .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
-    footer{color:var(--muted);font-size:12px;text-align:center;margin-top:6px}
   </style>
 </head>
 <body>
   <main class="app">
     <section class="card grid">
-      <h1 class="title">Kalkulačka odečtu <span class="pill">výsledek = částka × (1 − %/100)</span></h1>
-      <p class="muted">Zadej částku. Ve výchozím stavu se odečítá <b>5&nbsp;%</b>. Procento můžeš kdykoliv změnit.</p>
+      <h1 class="title">Deduction Calculator</h1>
+      <p class="sub">Enter an amount. By default, <b>5%</b> is deducted. You can change the percentage any time.</p>
 
       <div class="grid">
         <div class="grid">
-          <label for="amount">Vstupní částka</label>
-          <input id="amount" type="text" inputmode="decimal" placeholder="např. 1 000 nebo 1000,50" autocomplete="off" />
+          <label for="amount">Amount</label>
+          <input id="amount" type="text" inputmode="decimal" placeholder="e.g., 1,000 or 1000.50" autocomplete="off" />
         </div>
 
         <div class="row">
           <div class="grid" style="flex:1 1 160px;min-width:160px">
-            <label for="percent">Odečíst (%)</label>
+            <label for="percent">Deduct (%)</label>
             <input id="percent" type="number" min="0" max="100" step="0.01" value="5" />
           </div>
+
+          <div class="grid" style="flex:1 1 160px;min-width:160px">
+            <label for="currency">Currency</label>
+            <select id="currency">
+              <option value="NONE" selected>None</option>
+              <option value="CZK">CZK</option>
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+            </select>
+          </div>
+
           <div class="actions">
             <button class="chip" data-preset="5">5 %</button>
             <button class="chip" data-preset="10">10 %</button>
@@ -62,51 +80,83 @@
         <div class="result" aria-live="polite">
           <div class="row" style="justify-content:space-between;align-items:center">
             <div class="value" id="out">—</div>
-            <button class="btn" id="copyBtn">Kopírovat</button>
+            <button class="btn" id="copyBtn">Copy</button>
           </div>
-          <div class="muted" id="detail">Zadej číselnou hodnotu.</div>
+          <div class="muted" id="detail">Type a numeric value.</div>
         </div>
       </div>
-      <footer>Formát: české oddělovače. Výsledek se přepočítává živě.</footer>
     </section>
   </main>
 
   <script>
     const amount = document.getElementById('amount');
     const percent = document.getElementById('percent');
+    const currency = document.getElementById('currency');
     const out = document.getElementById('out');
     const detail = document.getElementById('detail');
     const copyBtn = document.getElementById('copyBtn');
-    const nf = new Intl.NumberFormat('cs-CZ',{minimumFractionDigits:2,maximumFractionDigits:2});
 
-    const parseNum = s => {
+    // placeholder UX: hide placeholder on focus, select existing value for quick overwrite
+    const originalPH = amount.placeholder;
+    amount.addEventListener('focus', () => {
+      amount.placeholder = '';
+      if (amount.value.length) amount.select();
+    });
+    amount.addEventListener('blur', () => { if (!amount.value) amount.placeholder = originalPH; });
+
+    const localesByCurrency = {
+      CZK: 'cs-CZ',
+      EUR: 'en-IE', // English with €
+      USD: 'en-US'
+    };
+
+    const numberPlain = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    function fmt(value){
+      const cur = currency.value;
+      if (cur === 'NONE') return numberPlain.format(value);
+      const nf = new Intl.NumberFormat(localesByCurrency[cur] || 'en-US', {
+        style: 'currency', currency: cur, minimumFractionDigits: 2, maximumFractionDigits: 2
+      });
+      return nf.format(value);
+    }
+
+    function parseNum(s){
       if(!s) return NaN;
       s = s.toString().trim().replace(/\s+/g,'').replace(',', '.').replace(/[^0-9.\-]/g,'');
       const parts = s.split('.');
       if(parts.length>2) s = parts.shift()+'.'+parts.join('');
       const v = parseFloat(s);
-      return isFinite(v) ? v : NaN;
-    };
+      return Number.isFinite(v) ? v : NaN;
+    }
 
     function recalc(){
       const n = parseNum(amount.value);
       const p = parseFloat(percent.value);
-      if(isNaN(n) || isNaN(p)){ out.textContent='—'; detail.textContent='Zadej číselnou hodnotu.'; return; }
-      const result = n*(1 - p/100);
+      if (isNaN(n) || isNaN(p)){
+        out.textContent = '—';
+        detail.textContent = 'Type a numeric value.';
+        document.querySelectorAll('.chip').forEach(ch=>ch.dataset.active='false');
+        return;
+      }
+      const result = n * (1 - p/100);
       const diff = n - result;
-      out.textContent = nf.format(result)+' Kč';
-      detail.textContent = `Z původních ${nf.format(n)} Kč odečteno ${nf.format(diff)} Kč (${p}% ).`;
-      document.querySelectorAll('.chip').forEach(ch=>ch.dataset.active = (parseFloat(ch.dataset.preset)===p));
+      out.textContent = fmt(result);
+      detail.textContent = `From the original ${fmt(n)}, deducted ${fmt(diff)} (${p}%).`;
+      document.querySelectorAll('.chip').forEach(ch=>ch.dataset.active = (parseFloat(ch.dataset.preset)===p).toString());
     }
 
     amount.addEventListener('input', recalc);
     percent.addEventListener('input', recalc);
+    currency.addEventListener('change', recalc);
     document.querySelectorAll('.chip').forEach(btn=>{
       btn.addEventListener('click', ()=>{ percent.value = btn.dataset.preset; recalc(); });
     });
+
     copyBtn.addEventListener('click', async ()=>{
-      const t = out.textContent.replace(/\s*Kč$/,'');
-      try{ await navigator.clipboard.writeText(t); copyBtn.textContent='Zkopírováno'; setTimeout(()=>copyBtn.textContent='Kopírovat',1000);}catch(e){ copyBtn.textContent='Chyba'; setTimeout(()=>copyBtn.textContent='Kopírovat',1000);}
+      const text = out.textContent || '';
+      try{ await navigator.clipboard.writeText(text); copyBtn.textContent='Copied'; setTimeout(()=>copyBtn.textContent='Copy',1000);}
+      catch(e){ copyBtn.textContent='Error'; setTimeout(()=>copyBtn.textContent='Copy',1000); }
     });
 
     recalc();
