@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kalkulačka -5%</title>
+</head>
+<body>
+  <h1>Kalkulačka – odečte 5 %</h1>
+  <p>Zadej částku:</p>
+  <input id="amount" type="number" placeholder="např. 1000">
+  <div id="output">Výsledek: —</div>
+
+  <script>
+    const amount = document.getElementById('amount');
+    const output = document.getElementById('output');
+
+    amount.addEventListener('input', () => {
+      let value = parseFloat(amount.value);
+      if (isNaN(value)) {
+        output.textContent = "Výsledek: —";
+      } else {
+        let result = value * 0.95;
+        output.textContent = "Výsledek: " + result.toFixed(2);
+      }
+    });
+  </script>
+</body>
+</html>
